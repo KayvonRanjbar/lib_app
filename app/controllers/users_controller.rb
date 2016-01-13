@@ -12,10 +12,9 @@ class UsersController < ApplicationController
 	end
 
 	def create
-		user_params = params.require(:user).permit(:first_name, :last_name, :email, :password)
 		@user = User.create(user_params)
-
-		redirect_to root_path
+		login(@user)
+		redirect_to @user
 	end
 
 	def show
@@ -23,4 +22,9 @@ class UsersController < ApplicationController
 		render :show
 	end
 
+	private
+
+	def user_params
+		params.require(:user).permit(:first_name, :last_name, :email, :password)
+	end
 end
